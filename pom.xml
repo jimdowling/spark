@@ -2074,7 +2074,7 @@
       <dependency>
         <groupId>${hive.group}</groupId>
         <artifactId>hive-llap-common</artifactId>
-        <version>${hive23.version}</version>
+        <version>${hive.version}</version>
         <scope>${hive.deps.scope}</scope>
         <exclusions>
           <exclusion>
@@ -2095,7 +2095,7 @@
       <dependency>
         <groupId>${hive.group}</groupId>
         <artifactId>hive-llap-client</artifactId>
-        <version>${hive23.version}</version>
+        <version>${hive.version}</version>
         <scope>test</scope>
         <exclusions>
           <exclusion>
@@ -2192,7 +2192,7 @@
           <exclusion>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>*</artifactId>
-          </exclusion>	  
+          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
@@ -3279,6 +3279,9 @@
     </profile>
     <profile>
       <id>orc-provided</id>
+      <properties>      
+        <orc.deps.scope>provided</orc.deps.scope>
+      </properties>	
     </profile>
     <profile>
       <id>parquet-provided</id>
