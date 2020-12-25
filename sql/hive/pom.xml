@@ -122,6 +122,7 @@
       <artifactId>hive-shims</artifactId>
       <scope>${hive.shims.scope}</scope>
     </dependency>
+
     <dependency>
       <groupId>${hive.group}</groupId>
       <artifactId>hive-llap-common</artifactId>
@@ -132,6 +133,7 @@
       <artifactId>hive-llap-client</artifactId>
       <scope>${hive.llap.scope}</scope>
     </dependency>
+    
     <!-- hive-serde already depends on avro, but this brings in customized config of avro deps from parent -->
     <dependency>
       <groupId>org.apache.avro</groupId>
