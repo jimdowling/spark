@@ -57,7 +57,14 @@
     <system>JIRA</system>
     <url>https://issues.apache.org/jira/browse/SPARK</url>
   </issueManagement>
-
+  <distributionManagement>
+    <repository>
+      <id>Hops</id>
+      <name>Hops Repo</name>
+      <url>https://archiva.hops.works/repository/Hops/</url>
+    </repository>
+  </distributionManagement>
+  
   <mailingLists>
     <mailingList>
       <name>Dev Mailing List</name>
@@ -120,12 +127,12 @@
     <sbt.project.name>spark</sbt.project.name>
     <slf4j.version>1.7.30</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
-    <hadoop.version>2.7.4</hadoop.version>
+    <hadoop.version>3.2.0.1-RC0</hadoop.version>    
     <protobuf.version>2.5.0</protobuf.version>
     <yarn.version>${hadoop.version}</yarn.version>
     <zookeeper.version>3.4.14</zookeeper.version>
     <curator.version>2.7.1</curator.version>
-    <hive.group>org.apache.hive</hive.group>
+    <hive.group>io.hops.hive</hive.group>    
     <hive.classifier>core</hive.classifier>
     <!-- Version used in Maven Hive dependency -->
     <hive.version>2.3.7</hive.version>
@@ -238,7 +245,7 @@
     <hadoop.deps.scope>compile</hadoop.deps.scope>
     <hive.deps.scope>compile</hive.deps.scope>
     <hive.parquet.scope>provided</hive.parquet.scope>
-    <hive.storage.version>2.7.1</hive.storage.version>
+    <hive.storage.version>2.6.1.2</hive.storage.version>
     <hive.storage.scope>compile</hive.storage.scope>
     <hive.common.scope>compile</hive.common.scope>
     <hive.llap.scope>compile</hive.llap.scope>
@@ -289,6 +296,17 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <repository>
+      <id>Hops</id>
+      <name>Hops Repo</name>
+      <url>https://archiva.hops.works/repository/Hops/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>    
   </repositories>
   <pluginRepositories>
     <pluginRepository>
@@ -1008,16 +1026,17 @@
         <version>${curator.version}</version>
         <scope>test</scope>
       </dependency>
+      
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-client</artifactId>
         <version>${hadoop.version}</version>
         <scope>${hadoop.deps.scope}</scope>
         <exclusions>
-          <exclusion>
-            <groupId>org.fusesource.leveldbjni</groupId>
-            <artifactId>leveldbjni-all</artifactId>
-          </exclusion>
+          <!-- <exclusion> -->
+          <!--   <groupId>org.fusesource.leveldbjni</groupId> -->
+          <!--   <artifactId>leveldbjni-all</artifactId> -->
+          <!-- </exclusion> -->
           <exclusion>
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
@@ -1091,7 +1110,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-minikdc</artifactId>
         <version>${hadoop.version}</version>
         <scope>test</scope>
@@ -1188,7 +1207,7 @@
         <scope>${hadoop.deps.scope}</scope>
       </dependency>
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-api</artifactId>
         <version>${yarn.version}</version>
         <scope>${hadoop.deps.scope}</scope>
@@ -1232,7 +1251,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-common</artifactId>
         <version>${yarn.version}</version>
         <scope>${hadoop.deps.scope}</scope>
@@ -1272,7 +1291,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-server-tests</artifactId>
         <version>${yarn.version}</version>
         <classifier>tests</classifier>
@@ -1317,7 +1336,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-server-web-proxy</artifactId>
         <version>${yarn.version}</version>
         <scope>${hadoop.deps.scope}</scope>
@@ -1370,7 +1389,7 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-client</artifactId>
         <version>${yarn.version}</version>
         <scope>${hadoop.deps.scope}</scope>
@@ -1634,7 +1653,7 @@
           </exclusion>
           <!-- hive-storage-api is needed and must be explicitly included later -->
           <exclusion>
-            <groupId>org.apache.hive</groupId>
+            <groupId>${hive.group}</groupId>
             <artifactId>hive-storage-api</artifactId>
           </exclusion>
           <!-- End of Hive 2.3 exclusion -->
@@ -2005,7 +2024,7 @@
             <artifactId>guava</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>org.apache.hadoop</groupId>
+            <groupId>io.hops</groupId>
             <artifactId>hadoop-yarn-server-resourcemanager</artifactId>
           </exclusion>
           <exclusion>
@@ -2053,17 +2072,17 @@
       <!-- hive-llap-common is needed when registering UDFs in Hive 2.3.
          We add it here, otherwise -Phive-provided won't work. -->
       <dependency>
-        <groupId>org.apache.hive</groupId>
+        <groupId>${hive.group}</groupId>
         <artifactId>hive-llap-common</artifactId>
         <version>${hive23.version}</version>
         <scope>${hive.deps.scope}</scope>
         <exclusions>
           <exclusion>
-            <groupId>org.apache.hive</groupId>
+            <groupId>${hive.group}</groupId>
             <artifactId>hive-common</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>org.apache.hive</groupId>
+            <groupId>${hive.group}</groupId>
             <artifactId>hive-serde</artifactId>
           </exclusion>
           <exclusion>
@@ -2074,21 +2093,21 @@
       </dependency>
       <!-- hive-llap-client is needed when run MapReduce test in Hive 2.3. -->
       <dependency>
-        <groupId>org.apache.hive</groupId>
+        <groupId>${hive.group}</groupId>
         <artifactId>hive-llap-client</artifactId>
         <version>${hive23.version}</version>
         <scope>test</scope>
         <exclusions>
           <exclusion>
-            <groupId>org.apache.hive</groupId>
+            <groupId>${hive.group}</groupId>
             <artifactId>hive-common</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>org.apache.hive</groupId>
+            <groupId>${hive.group}</groupId>
             <artifactId>hive-serde</artifactId>
           </exclusion>
           <exclusion>
-            <groupId>org.apache.hive</groupId>
+            <groupId>${hive.group}</groupId>
             <artifactId>hive-llap-common</artifactId>
           </exclusion>
           <exclusion>
@@ -2133,6 +2152,14 @@
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-storage-api</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>io.airlift</groupId>
+            <artifactId>slice</artifactId>
+          </exclusion>	  
+          <exclusion>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
@@ -2162,6 +2189,10 @@
             <groupId> com.esotericsoftware</groupId>
             <artifactId>kryo-shaded</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>	  
         </exclusions>
       </dependency>
       <dependency>
@@ -2296,7 +2327,7 @@
         <version>2.9.0</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.hive</groupId>
+        <groupId>${hive.group}</groupId>
         <artifactId>hive-storage-api</artifactId>
         <version>${hive.storage.version}</version>
         <scope>${hive.storage.scope}</scope>
@@ -3074,8 +3105,9 @@
     <profile>
       <id>hadoop-3.2</id>
       <properties>
-        <hadoop.version>3.2.0</hadoop.version>
+        <hadoop.version>3.2.0.1-RC0</hadoop.version>
         <curator.version>2.13.0</curator.version>
+        <zookeeper.version>3.4.9</zookeeper.version>	
       </properties>
     </profile>
 
