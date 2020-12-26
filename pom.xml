@@ -245,7 +245,8 @@
     <hadoop.deps.scope>compile</hadoop.deps.scope>
     <hive.deps.scope>compile</hive.deps.scope>
     <hive.parquet.scope>provided</hive.parquet.scope>
-    <hive.storage.version>2.6.1.2</hive.storage.version>
+<!--    <hive.storage.version>2.7.1</hive.storage.version>-->
+    <hive.storage.version>2.6.1.2</hive.storage.version> 
     <hive.storage.scope>compile</hive.storage.scope>
     <hive.common.scope>compile</hive.common.scope>
     <hive.llap.scope>compile</hive.llap.scope>
@@ -2072,9 +2073,9 @@
       <!-- hive-llap-common is needed when registering UDFs in Hive 2.3.
          We add it here, otherwise -Phive-provided won't work. -->
       <dependency>
-        <groupId>${hive.group}</groupId>
+        <groupId>org.apache.hive</groupId>
         <artifactId>hive-llap-common</artifactId>
-        <version>${hive.version}</version>
+        <version>${hive23.version}</version>
         <scope>${hive.deps.scope}</scope>
         <exclusions>
           <exclusion>
@@ -2093,9 +2094,9 @@
       </dependency>
       <!-- hive-llap-client is needed when run MapReduce test in Hive 2.3. -->
       <dependency>
-        <groupId>${hive.group}</groupId>
+        <groupId>org.apache.hive</groupId>
         <artifactId>hive-llap-client</artifactId>
-        <version>${hive.version}</version>
+        <version>${hive23.version}</version>
         <scope>test</scope>
         <exclusions>
           <exclusion>
