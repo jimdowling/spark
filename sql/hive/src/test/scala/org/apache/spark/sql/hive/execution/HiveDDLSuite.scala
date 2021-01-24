@@ -1546,9 +1546,10 @@ class HiveDDLSuite
       "maxFileSize",
       "minFileSize"
     )
-    assert(targetTable.properties.filterKeys(!metastoreGeneratedProperties.contains(_)).isEmpty,
-      "the table properties of source tables should not be copied in the created table")
-
+    // Fabio: in the new Hive create table like also copies the properties
+    //assert(targetTable.properties.filterKeys(!metastoreGeneratedProperties.contains(_)).isEmpty,
+    //  "the table properties of source tables should not be copied in the created table")
+    
     provider match {
       case Some(_) =>
         assert(targetTable.provider == provider)
@@ -1609,7 +1610,8 @@ class HiveDDLSuite
       sql(s"SELECT * FROM ${targetTable.identifier}"))
   }
 
-  test("create table with the same name as an index table") {
+  // Fabio: Hive 3 doesn't support indexes
+  ignore("create table with the same name as an index table") {  
     val tabName = "tab1"
     val indexName = tabName + "_index"
     withTable(tabName) {

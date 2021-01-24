@@ -47,6 +47,31 @@
 -->
 
 <property>
+  <name>hops.metadata.consistent</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>datanucleus.schema.autoCreateSchema</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>datanucleus.schema.autoCreateTables</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>datanucleus.schema.autoCreateColumns</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.metastore.schema.verification</name>
+  <value>false</value>
+</property>
+
+<property>
   <name>hive.exec.scratchdir</name>
   <value>${test.tmp.dir}/scratchdir</value>
   <description>Scratch space for Hive jobs</description>
@@ -62,12 +87,6 @@
   <name>javax.jdo.option.ConnectionURL</name>
   <value>jdbc:derby:;databaseName=${test.tmp.dir}/junit_metastore_db;create=true</value>
 </property>
-
-<property>
-  <name>hive.stats.dbconnectionstring</name>
-  <value>jdbc:derby:;databaseName=${test.tmp.dir}/TempStatsStore;create=true</value>
-</property>
-
 
 <property>
   <name>javax.jdo.option.ConnectionDriverName</name>
@@ -92,14 +111,6 @@
 </property>
 
 <property>
-  <name>hive.metastore.metadb.dir</name>
-  <value>file://${test.tmp.dir}/metadb/</value>
-  <description>
-  Required by metastore server or if the uris argument below is not supplied
-  </description>
-</property>
-
-<property>
   <name>test.log.dir</name>
   <value>${test.tmp.dir}/log/</value>
   <description></description>
@@ -113,7 +124,7 @@
 
 <property>
   <name>hive.jar.path</name>
-  <value>${maven.local.repository}/org/apache/hive/hive-exec/${hive.version}/hive-exec-${hive.version}.jar</value>
+  <value>${maven.local.repository}/io/hops/hive/hive-exec/${hive.version}/hive-exec-${hive.version}.jar</value>
   <description></description>
 </property>
 

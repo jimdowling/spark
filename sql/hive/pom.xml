@@ -91,7 +91,7 @@
     <dependency>
       <groupId>${hive.group}</groupId>
       <artifactId>hive-common</artifactId>
-      <scope>${hive.common.scope}</scope>
+      <version>${hive.version}</version>      
     </dependency>
     <dependency>
       <groupId>${hive.group}</groupId>
@@ -110,7 +110,15 @@
     </dependency>
     <dependency>
       <groupId>${hive.group}</groupId>
-      <artifactId>hive-metastore</artifactId>
+      <artifactId>hive-standalone-metastore</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${hive.group}</groupId>
+      <artifactId>hive-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${hive.group}</groupId>
+      <artifactId>hive-service</artifactId>      
     </dependency>
     <dependency>
       <groupId>${hive.group}</groupId>
@@ -122,17 +130,68 @@
       <artifactId>hive-shims</artifactId>
       <scope>${hive.shims.scope}</scope>
     </dependency>
+      <!-- hive-llap-client is needed when run MapReduce test in Hive 2.3. -->
     <dependency>
-      <groupId>${hive.group}</groupId>
-      <artifactId>hive-llap-common</artifactId>
-      <scope>${hive.llap.scope}</scope>
-    </dependency>
-    <dependency>
-      <groupId>${hive.group}</groupId>
+      <groupId>org.apache.hive</groupId>
       <artifactId>hive-llap-client</artifactId>
-      <scope>${hive.llap.scope}</scope>
+      <version>3.1.2</version>
+      <scope>${hive.llap.scope}</scope>      
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.hive</groupId>
+          <artifactId>hive-common</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.hive</groupId>
+          <artifactId>hive-serde</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.hive</groupId>
+          <artifactId>hive-llap-common</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.curator</groupId>
+          <artifactId>curator-framework</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.curator</groupId>
+          <artifactId>apache-curator</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.zookeeper</groupId>
+          <artifactId>zookeeper</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-    <!-- hive-serde already depends on avro, but this brings in customized config of avro deps from parent -->
+    <dependency>
+      <groupId>org.apache.hive</groupId>
+     <artifactId>hive-llap-common</artifactId>
+     <version>3.1.2</version>
+     <scope>${hive.llap.scope}</scope>     
+     <exclusions>
+       <exclusion>	    
+         <groupId>org.apache.hadoop</groupId>
+         <artifactId>hadoop-yarn-server-resourcemanager</artifactId>
+       </exclusion>
+       <exclusion>
+         <groupId>org.apache.hive</groupId>
+         <artifactId>hive-common</artifactId>
+       </exclusion>
+       <exclusion>
+         <groupId>org.apache.hive</groupId>
+         <artifactId>hive-serde</artifactId>
+       </exclusion>
+       <exclusion>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+       </exclusion>
+     </exclusions>
+   </dependency>
+     <!-- hive-serde already depends on avro, but this brings in customized config of avro deps from parent -->
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
@@ -189,6 +248,12 @@
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-1.2-api</artifactId>
+      <version>2.10.0</version>
+      <scope>test</scope>
+    </dependency>    
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-compiler</artifactId>

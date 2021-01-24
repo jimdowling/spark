@@ -59,7 +59,7 @@ private[spark] object HiveUtils extends Logging {
   val isHive23: Boolean = hiveVersion.startsWith("2.3")
 
   /** The version of hive used internally by Spark SQL. */
-  val builtinHiveVersion: String = if (isHive23) hiveVersion else "1.2.1"
+  val builtinHiveVersion: String = if (isHive23) hiveVersion else "3.0.1"
 
   val HIVE_METASTORE_VERSION = buildStaticConf("spark.sql.hive.metastore.version")
     .doc("Version of the Hive metastore. Available options are " +
@@ -255,7 +255,7 @@ private[spark] object HiveUtils extends Logging {
       ConfVars.SPARK_JOB_MONITOR_TIMEOUT -> TimeUnit.SECONDS,
       ConfVars.SPARK_RPC_CLIENT_CONNECT_TIMEOUT -> TimeUnit.MILLISECONDS,
       ConfVars.SPARK_RPC_CLIENT_HANDSHAKE_TIMEOUT -> TimeUnit.MILLISECONDS
-    ).map { case (confVar, unit) =>
+    ).map { case (confVar: ConfVars, unit: TimeUnit) =>
       confVar.varname -> HiveConf.getTimeVar(hadoopConf, confVar, unit).toString
     }
 

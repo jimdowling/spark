@@ -24,6 +24,7 @@ import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 
 import java.io.IOException;
+import org.apache.orc.TypeDescription;
 
 /**
  * This is based on hive-exec-1.2.1
@@ -44,7 +45,8 @@ public class SparkOrcNewRecordReader extends
     if (file.getTypes().isEmpty()) {
       numColumns = 0;
     } else {
-      numColumns = file.getTypes().get(0).getSubtypesCount();
+      TypeDescription schema = file.getSchema();
+      numColumns = (schema.getChildren() == null) ? 0 : schema.getChildren().size();
     }
     value = new OrcStruct(numColumns);
     this.reader = OrcInputFormat.createReaderFromFile(file, conf, offset,

@@ -139,6 +139,7 @@ class VersionsSuite extends SparkFunSuite with Logging {
       // For details, see the JIRA HIVE-6113 and HIVE-12463
       if (version == "2.0" || version == "2.1" || version == "2.2" || version == "2.3" ||
           version == "3.0" || version == "3.1") {
+        hadoopConf.set("hops.metadata.consistent", "false")
         hadoopConf.set("datanucleus.schema.autoCreateAll", "true")
         hadoopConf.set("hive.metastore.schema.verification", "false")
       }
@@ -410,7 +411,7 @@ class VersionsSuite extends SparkFunSuite with Logging {
 
     test(s"$version: dropTable") {
       val versionsWithoutPurge =
-        if (versions.contains("0.14")) versions.takeWhile(_ != "0.14") else Nil
+        if (versions.contains("3.0")) versions.takeWhile(_ != "3.0") else Nil
       // First try with the purge option set. This should fail if the version is < 0.14, in which
       // case we check the version and try without it.
       try {
@@ -548,7 +549,8 @@ class VersionsSuite extends SparkFunSuite with Logging {
         numDP = 1)
     }
 
-    test(s"$version: renamePartitions") {
+    // Fabio: we don't allow renames in HopsHive
+    ignore(s"$version: renamePartitions") {
       val oldSpec = Map("key1" -> "1", "key2" -> "1")
       val newSpec = Map("key1" -> "1", "key2" -> "3")
       client.renamePartitions("default", "src_part", Seq(oldSpec), Seq(newSpec))
@@ -576,7 +578,7 @@ class VersionsSuite extends SparkFunSuite with Logging {
     test(s"$version: dropPartitions") {
       val spec = Map("key1" -> "1", "key2" -> "3")
       val versionsWithoutPurge =
-        if (versions.contains("1.2")) versions.takeWhile(_ != "1.2") else Nil
+        if (versions.contains("1.2")) versions.takeWhile(_ != "3.0") else Nil
       // Similar to dropTable; try with purge set, and if it fails, make sure we're running
       // with a version that is older than the minimum (1.2 in this case).
       try {

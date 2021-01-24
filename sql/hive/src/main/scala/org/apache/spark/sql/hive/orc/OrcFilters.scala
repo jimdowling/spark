@@ -157,6 +157,7 @@ private[orc] object OrcFilters extends Logging {
       dataTypeMap: Map[String, DataType],
       expression: Filter,
       builder: Builder): Builder = {
+
     expression match {
       case And(left, right) =>
         val lhs = buildSearchArgument(dataTypeMap, left, builder.startAnd())

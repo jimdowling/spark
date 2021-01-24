@@ -311,8 +311,8 @@ class HiveOrcFilterSuite extends OrcTest with TestHiveSingleton {
       // This might have to be changed after Hive version is upgraded.
       checkFilterPredicateWithDiffHiveVersion(
         $"_1".isNotNull,
-        """leaf-0 = (IS_NULL _1)
-          |expr = (not leaf-0)""".stripMargin.trim
+        ("leaf-0 = (IS_NULL _1), " +
+          "expr = (not leaf-0)").stripMargin.trim	  
       )
       checkFilterPredicateWithDiffHiveVersion(
         $"_1" =!= 1,

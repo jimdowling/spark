@@ -67,7 +67,7 @@
     </dependency>
     <dependency>
       <groupId>${hive.group}</groupId>
-      <artifactId>hive-cli</artifactId>
+      <artifactId>hive-standalone-metastore</artifactId>
     </dependency>
     <dependency>
       <groupId>${hive.group}</groupId>

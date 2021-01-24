@@ -119,8 +119,8 @@ private[hive] object IsolatedClientLoader extends Logging {
       ivyPath: Option[String],
       remoteRepos: String): Seq[URL] = {
     val hiveArtifacts = version.extraDeps ++
-      Seq("hive-metastore", "hive-exec", "hive-common", "hive-serde")
-        .map(a => s"org.apache.hive:$a:${version.fullVersion}") ++
+      Seq("hive-standalone-metastore", "hive-exec", "hive-common", "hive-serde")
+        .map(a => s"io.hops.hive:$a:${version.fullVersion}") ++
       Seq("com.google.guava:guava:14.0.1",
         s"org.apache.hadoop:hadoop-client:$hadoopVersion")
 

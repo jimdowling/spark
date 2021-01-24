@@ -17,6 +17,8 @@
 
 package org.apache.spark.sql.execution.datasources.orc
 
+import org.apache.hadoop.hive.common.`type`.HiveDecimal
+import org.apache.hadoop.hive.serde2.io.{DateWritable, HiveDecimalWritable}
 import org.apache.hadoop.io._
 import org.apache.orc.TypeDescription
 import org.apache.orc.mapred.{OrcList, OrcMap, OrcStruct, OrcTimestamp}
